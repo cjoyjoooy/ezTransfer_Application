@@ -1,4 +1,3 @@
-import 'package:eztransfer/Confirm.dart';
 import 'package:flutter/material.dart';
 
 class QRCode extends StatefulWidget {

@@ -13,7 +13,6 @@ class Sender extends StatefulWidget {
 }
 
 class _SenderState extends State<Sender> {
-  @override
   getMultipleFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       allowMultiple: true,
@@ -32,6 +31,7 @@ class _SenderState extends State<Sender> {
   }
 
   List<File?> files = [];
+
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -48,7 +48,7 @@ class _SenderState extends State<Sender> {
                 decoration: BoxDecoration(
                     border:
                         Border.all(width: 3, color: Colors.lightGreenAccent),
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                    borderRadius: const BorderRadius.all(Radius.circular(10))),
                 child: Scrollbar(
                     child: ListView.builder(
                   itemCount: files.length,
