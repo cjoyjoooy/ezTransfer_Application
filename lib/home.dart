@@ -1,5 +1,5 @@
 import 'package:eztransfer/Sender.dart';
-import 'package:eztransfer/reciever.dart';
+import 'package:eztransfer/receiver.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -74,9 +74,9 @@ class _HomeState extends State<Home> {
               ),
               onPressed: () {
                 Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (contect) => Reciever()));
+                    .push(MaterialPageRoute(builder: (contect) => Receiver()));
               },
-              child: const Text("Recieve file"),
+              child: const Text("Receive file"),
             ),
           ],
         ),

@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'Confirm.dart';
 import 'models/validator.dart';
 
-class Reciever extends StatefulWidget {
-  const Reciever({super.key});
+class Receiver extends StatefulWidget {
+  const Receiver({super.key});
 
   @override
-  State<Reciever> createState() => _RecieverState();
+  State<Receiver> createState() => _ReceiverState();
 }
 
-class _RecieverState extends State<Reciever> {
+class _ReceiverState extends State<Receiver> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController passwordcontroller = TextEditingController();
   var _isObscured;
@@ -31,7 +31,7 @@ class _RecieverState extends State<Reciever> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Reciever"),
+        title: const Text("Receiver"),
         centerTitle: true,
         backgroundColor: Colors.lightGreenAccent,
       ),

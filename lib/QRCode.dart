@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class QRCode extends StatefulWidget {
   const QRCode({super.key});
@@ -38,8 +40,11 @@ class _QRCodeState extends State<QRCode> {
           children: [
             Container(
               height: 350,
-              color: Colors.lightGreen,
-              child: const Text("Generate QR here/ diri ibutang ang QR Code"),
+              color: Colors.white,
+              child: QrImageView(
+                data: '',
+                size: 350,
+              ),
             ),
             const SizedBox(
               height: 10,
@@ -51,7 +56,7 @@ class _QRCodeState extends State<QRCode> {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "Generate Password/ibutang diri ", //i limit lang arun dili kaayo taas
+                  "", //i limit lang arun dili kaayo taas
                   style: TextStyle(fontSize: 16),
                 ),
               ],
