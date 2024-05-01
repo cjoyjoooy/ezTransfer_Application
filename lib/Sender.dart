@@ -1,6 +1,5 @@
 // ignore: file_names
 import 'dart:io';
-
 import 'package:eztransfer/QRCode.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -87,9 +86,6 @@ class _SenderState extends State<Sender> {
                   getMultipleFile();
                 },
                 child: const Text("Choose File"),
-              ),
-              const SizedBox(
-                height: 20,
               ),
               const SizedBox(
                 height: 20,

@@ -1,5 +1,5 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class QRCode extends StatefulWidget {
@@ -26,8 +26,26 @@ class _QRCodeState extends State<QRCode> {
     super.dispose();
   }
 
+  String generatePassword() {
+    final length = 12;
+    final lettersUpperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    final lettersLowerCase = 'abcdefghijklmnopqrstuvwxyz';
+    final numbers = '0123456789';
+
+    String chars = '';
+    chars += '$lettersUpperCase$lettersLowerCase';
+    chars += '$numbers';
+
+    return List.generate(length, (index) {
+      final indexRandom = Random.secure().nextInt(chars.length);
+
+      return chars[indexRandom];
+    }).join('');
+  }
+
   @override
   Widget build(BuildContext context) {
+    String password = generatePassword();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Send File"),
@@ -42,7 +60,7 @@ class _QRCodeState extends State<QRCode> {
               height: 350,
               color: Colors.white,
               child: QrImageView(
-                data: '',
+                data: password,
                 size: 350,
               ),
             ),
@@ -52,12 +70,12 @@ class _QRCodeState extends State<QRCode> {
             Row(
               children: [
                 const Text(
-                  "Password: ",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  "Password:   ",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "", //i limit lang arun dili kaayo taas
-                  style: TextStyle(fontSize: 16),
+                  password, //i limit lang arun dili kaayo taas
+                  style: TextStyle(fontSize: 18),
                 ),
               ],
             ),
