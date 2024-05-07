@@ -1,5 +1,6 @@
 import 'package:eztransfer/Sender.dart';
 import 'package:eztransfer/receiver.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -53,8 +54,11 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (contect) => Sender()));
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => Sender(),
+                    ),
+                  );
                 },
                 child: const Text("Send File")),
             const SizedBox(
@@ -77,6 +81,15 @@ class _HomeState extends State<Home> {
                     .push(MaterialPageRoute(builder: (contect) => Receiver()));
               },
               child: const Text("Receive file"),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+              },
+              child: const Text('Sign Out'),
             ),
           ],
         ),

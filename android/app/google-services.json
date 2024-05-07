@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "471396108409",
+    "project_id": "eztransferdb",
+    "storage_bucket": "eztransferdb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:471396108409:android:e976134236df1b72a26ca8",
+        "android_client_info": {
+          "package_name": "com.example.eztransfer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDa9wFDLZpy9QCWe5fGLUhBhMfcmu1eqlc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
