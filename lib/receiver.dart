@@ -1,11 +1,9 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eztransfer/models/passwordfield.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
-import 'models/validator.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class Receiver extends StatefulWidget {
@@ -67,20 +65,27 @@ class _ReceiverState extends State<Receiver> {
             ),
             Form(
               key: _formKey,
-              child: PasswordField(
-                txtController: passwordController,
-                label: "Password",
-                validator: validatePassword,
-                iconVal: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _isObscured = !_isObscured;
-                    });
-                  },
-                  child: Icon(
-                      _isObscured ? Icons.visibility : Icons.visibility_off),
+              child: TextFormField(
+                controller: passwordController,
+                obscureText: _isObscured,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter password';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _isObscured = !_isObscured;
+                      });
+                    },
+                    child: Icon(
+                        _isObscured ? Icons.visibility : Icons.visibility_off),
+                  ),
                 ),
-                obscurevalue: _isObscured,
               ),
             ),
             const SizedBox(
@@ -100,7 +105,6 @@ class _ReceiverState extends State<Receiver> {
               ),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  // Check password in Firestore
                   checkPasswordInFirestore(passwordController.text.trim());
                 }
               },
@@ -149,22 +153,19 @@ class _ReceiverState extends State<Receiver> {
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('TransferFiles')
-          .where('qrPassword', isEqualTo: passwordController.text.trim())
+          .where('qrPassword', isEqualTo: password)
           .get();
 
       if (querySnapshot.docs.isNotEmpty) {
-        // Password matches, display "File Found" message
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('File Found'),
+            content: Text('File Downloaded'),
           ),
         );
 
-        // Retrieve the filename and download the file
         String filename = querySnapshot.docs.first.get('filename');
         downloadFileFromStorage(filename);
       } else {
-        // No matching password found
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Invalid password'),
@@ -172,7 +173,6 @@ class _ReceiverState extends State<Receiver> {
         );
       }
     } catch (e) {
-      // Error handling
       print('Error checking password in Firestore: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -182,26 +182,19 @@ class _ReceiverState extends State<Receiver> {
     }
   }
 
-  void downloadFileFromStorage(String filename) async {
+  Future<void> downloadFileFromStorage(String filename) async {
     try {
-      // Get reference to the file in Firebase Storage
+      String downloadsPath = (await getExternalStorageDirectory())!.path;
+
+      File downloadToFile = File('$downloadsPath/$filename');
+
       Reference ref =
           FirebaseStorage.instance.ref().child('UploadedFiles/$filename');
 
-      // Get temporary directory path
-      Directory tempDir = await getTemporaryDirectory();
-      String tempPath = tempDir.path;
-
-      // Create File object with temporary path
-      File downloadToFile = File('$tempPath/$filename');
-
-      // Download the file to device storage
       await ref.writeToFile(downloadToFile);
 
-      // File downloaded successfully
       print('File downloaded to: ${downloadToFile.path}');
     } catch (e) {
-      // Error handling
       print('Error downloading file: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
