@@ -26,7 +26,7 @@ class _HomeState extends State<Home> {
             const Icon(
               Icons.send_to_mobile_outlined,
               size: 150,
-              color: Colors.lightGreen,
+              color: Colors.lightGreenAccent,
             ),
             const SizedBox(
               height: 30,
@@ -83,9 +83,20 @@ class _HomeState extends State<Home> {
               child: const Text("Receive file"),
             ),
             const SizedBox(
-              height: 10,
+              height: 50,
             ),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                textStyle: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.lightGreenAccent),
+                minimumSize: Size.fromHeight(50),
+                backgroundColor: Colors.transparent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
               onPressed: () {
                 FirebaseAuth.instance.signOut();
               },
